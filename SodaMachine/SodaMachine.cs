@@ -104,10 +104,10 @@ namespace SodaMachine
            
         }
         //Gets a soda from the inventory based on the name of the soda.
-        private Can GetSodaFromInventory(string nameOfSoda)
-        {
+        //private Can GetSodaFromInventory(string nameOfSoda)
+        //{
 
-        }
+        //}
 
         //This is the main method for calculating the result of the transaction.
         //It takes in the payment from the customer, the soda object they selected, and the customer who is purchasing the soda.
@@ -124,32 +124,32 @@ namespace SodaMachine
         //Attempts to gather all the required coins from the sodamachine's register to make change.
         //Returns the list of coins as change to despense.
         //If the change cannot be made, return null.
-        private List<Coin> GatherChange(double changeValue)
-        {
+        //private List<Coin> GatherChange(double changeValue)
+        //{
 
-        }
+        //}
         //Reusable method to check if the register has a coin of that name.
         //If it does have one, return true.  Else, false.
-        private bool RegisterHasCoin(string name)
-        {
+        //private bool RegisterHasCoin(string name)
+        //{
 
-        }
+        //}
         //Reusable method to return a coin from the register.
         //Returns null if no coin can be found of that name.
-        private Coin GetCoinFromRegister(string name)
-        {
+        //private Coin GetCoinFromRegister(string name)
+        //{
 
-        }
+        //}
         //Takes in the total payment amount and the price of can to return the change amount.
-        private double DetermineChange(double totalPayment, double canPrice)
-        {
+        //private double DetermineChange(double totalPayment, double canPrice)
+        //{
 
-        }
+        //}
         //Takes in a list of coins to return the total value of the coins as a double.
-        private double TotalCoinValue(List<Coin> payment)
-        {
+        //private double TotalCoinValue(List<Coin> payment)
+        //{
 
-        }
+        //}
         //Puts a list of coins into the soda machines register.
         private void DepositCoinsIntoRegister(List<Coin> coins)
         {

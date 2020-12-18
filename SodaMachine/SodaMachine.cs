@@ -123,8 +123,9 @@ namespace SodaMachine
         {
             string selectedSoda = UserInterface.SodaSelection(_inventory);
             Can selectedCan = GetSodaFromInventory(selectedSoda);
-            List<Coin> payment = customer.GatherCoinsFromWallet(selectedCan);
-            //UserInterface.CoinSelection(selectedCan, customer.GatherCoinsFromWallet(selectedCan));
+            List<Coin> payment = customer.GatherCoinsFromWallet(selectedCan); //immediately stops once enough $$ is deposited may need to fix this
+            CalculateTransaction(payment, selectedCan, customer);
+
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
@@ -152,7 +153,34 @@ namespace SodaMachine
         //If the payment does not meet the cost of the soda: dispense payment back to the customer.
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
-           
+            double totalCoins = TotalCoinValue(payment);
+
+            if (totalCoins < chosenSoda.Price)
+            {
+                Console.WriteLine("Not enough change was passed in. Transaction not completed");
+                customer.AddCoinsIntoWallet(payment);
+            }
+
+            else if (totalCoins == chosenSoda.Price)
+            {
+                DepositCoinsIntoRegister(payment);
+                customer.AddCanToBackpack(chosenSoda);
+                _inventory.Remove(chosenSoda);
+            }
+
+            else if (totalCoins > chosenSoda.Price && _inventory.Count > 0)
+            {
+                DepositCoinsIntoRegister(payment);
+                double changeValue = DetermineChange(totalCoins, chosenSoda.Price);
+                customer.AddCoinsIntoWallet(payment);
+                customer.AddCanToBackpack(chosenSoda);
+                _inventory.Remove(chosenSoda);
+            }
+            if (totalCoins > chosenSoda.Price && _inventory.Count == 0)
+            {
+                Console.WriteLine("Soda not available. Cannot complete the transaction");
+                customer.AddCoinsIntoWallet(payment);
+            }
         }
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.
@@ -165,27 +193,39 @@ namespace SodaMachine
             {
                 if (changeValue > 0.25)
                 {
+                    if (RegisterHasCoin("Quarter"))
+                    {
                     Coin quarter = GetCoinFromRegister("Quarter");
                     changeCoins.Add(quarter);
                     changeValue -= .25;
+                    }
                 }
                 else if (changeValue >= .10)
                 {
+                    if (RegisterHasCoin("Dime"))
+                    {
                     Coin dime = GetCoinFromRegister("Dime");
                     changeCoins.Add(dime);
                     changeValue -= .10;
+                    }
                 }
                 else if (changeValue >= .05)
                 {
+                    if (RegisterHasCoin("Nickel"))
+                    {
                     Coin nickel = GetCoinFromRegister("Nickel");
                     changeCoins.Add(nickel);
                     changeValue -= .05;
+                    }
                 }
                 else if (changeValue >= 0)
                 {
+                    if (RegisterHasCoin("Penny"))
+                    {
                     Coin penny = GetCoinFromRegister("Penny");
                     changeCoins.Add(penny);
                     changeValue -= .01;
+                    }
                 }
             }
             return changeCoins;
@@ -194,21 +234,37 @@ namespace SodaMachine
         //If it does have one, return true.  Else, false.
         private bool RegisterHasCoin(string name)
         {
-            bool notActualValue = true;
-            return notActualValue;
+            foreach (Coin coin in _register)
+            {
+                if (coin.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         //Reusable method to return a coin from the register.
         //Returns null if no coin can be found of that name.
         private Coin GetCoinFromRegister(string name)
         {
-            Coin notActualValue = new Coin();
-            return notActualValue;
+            
+            foreach (Coin coin in _register)
+            {
+                if (coin.Name == name)
+                {
+                    _register.Remove(coin);
+                    return coin;
+                }
+            }
+            return null;
         }
         //Takes in the total payment amount and the price of can to return the change amount.
         private double DetermineChange(double totalPayment, double canPrice)
         {
-            double notActualValue = 0;
-            return notActualValue;
+            double returnChange;
+            returnChange = (totalPayment - canPrice);
+
+            return returnChange;
         }
         //Takes in a list of coins to return the total value of the coins as a double.
         private double TotalCoinValue(List<Coin> payment)

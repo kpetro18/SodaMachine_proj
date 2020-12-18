@@ -172,7 +172,8 @@ namespace SodaMachine
             {
                 DepositCoinsIntoRegister(payment);
                 double changeValue = DetermineChange(totalCoins, chosenSoda.Price);
-                customer.AddCoinsIntoWallet(payment);
+                List<Coin> returnCoins = GatherChange(changeValue);
+                customer.AddCoinsIntoWallet(returnCoins);
                 customer.AddCanToBackpack(chosenSoda);
                 _inventory.Remove(chosenSoda);
             }
@@ -269,8 +270,12 @@ namespace SodaMachine
         //Takes in a list of coins to return the total value of the coins as a double.
         private double TotalCoinValue(List<Coin> payment)
         {
-            double notActualValue = 0;
-            return notActualValue;
+            double totalValue = 0;
+            foreach (Coin coin in payment)
+            {
+                totalValue += coin.Value;
+            }
+            return totalValue;
         }
         //Puts a list of coins into the soda machines register.
         private void DepositCoinsIntoRegister(List<Coin> coins)

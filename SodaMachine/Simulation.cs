@@ -22,7 +22,7 @@ namespace SodaMachine
         //Member Methods
         public void Simulate()
         {
-            //_sodaMachine.FillRegister();
+            _sodaMachine.FillRegister();
             bool willProceed = true;
             while (willProceed)
             {

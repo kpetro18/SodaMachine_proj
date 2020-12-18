@@ -33,7 +33,7 @@ namespace SodaMachine
 
             startingRootBeerAmount = 5;
             startingColaAmount = 3;
-            startingOrangeSodaAmount = 1;
+            startingOrangeSodaAmount = 1; //can just be passed in as perameters 
 
             FillRegister();
             FillInventory();

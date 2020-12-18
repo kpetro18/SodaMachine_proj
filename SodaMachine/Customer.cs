@@ -25,15 +25,46 @@ namespace SodaMachine
         //Will need to get user input for coins they would like to add.
         //When all is said and done this method will return a list of coin objects that the customer will use as payment for their soda.
         public List<Coin> GatherCoinsFromWallet(Can selectedCan)
-        {
-            //promt customer to select coins to use for payment
-            double selectedCoinsValue = 0;
-            while (selectedCan.Price > selectedCoinsValue)
-            {
+        {            
+            List<Coin> coinsForSoda = new List<Coin>();
+            double gatheredCoinsValue = 0;
+            string selectedCoin;
 
+
+            while (gatheredCoinsValue < selectedCan.Price)
+            {
+                selectedCoin = UserInterface.CoinSelection(selectedCan, coinsForSoda);
+
+                if (selectedCoin == "Quarter")
+                {
+                    Coin quarter = GetCoinFromWallet("Quarter");
+                    coinsForSoda.Add(quarter);
+                    gatheredCoinsValue += .25;
+                }
+                else if (selectedCoin == "Dime")
+                {
+                    Coin dime = GetCoinFromWallet("Dime");
+                    coinsForSoda.Add(dime);
+                    gatheredCoinsValue += .10;
+                }
+                else if (selectedCoin == "Nickel")
+                {
+                    Coin nickel = GetCoinFromWallet("Nickel");
+                    coinsForSoda.Add(nickel);
+                    gatheredCoinsValue += .05;
+                }
+                else if (selectedCoin == "Penny")
+                {
+                    Coin penny = GetCoinFromWallet("Penny");
+                    coinsForSoda.Add(penny);
+                    gatheredCoinsValue += .01;
+                }
+                else
+                {
+                    coinsForSoda = null;
+                }
             }
-            List<Coin> notActualValue = new List<Coin>();
-            return notActualValue;
+            return coinsForSoda;
         }
         //Returns a coin object from the wallet based on the name passed into it.
         //Returns null if no coin can be found

@@ -14,7 +14,7 @@ namespace SodaMachine
         public Nickel()
         {
             value = 0.05;
-            Name = "nickel";
+            Name = "Nickel";
         }
         //Member Methods (Can Do)
     }

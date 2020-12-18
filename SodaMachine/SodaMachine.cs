@@ -121,23 +121,26 @@ namespace SodaMachine
         //pass payment to the calculate transaction method to finish up the transaction based on the results.
         private void Transaction(Customer customer)
         {
-            //display list of sodas available
             string selectedSoda = UserInterface.SodaSelection(_inventory);
-            GetSodaFromInventory(selectedSoda);
-            //move to payment method 
-            UserInterface.CoinSelection(selectedSoda, );
-
-            //magical stuff to calculate the actual purchase. add/remove coins/cans to/from soda machine register and customer/backback
+            Can selectedCan = GetSodaFromInventory(selectedSoda);
+            List<Coin> payment = customer.GatherCoinsFromWallet(selectedCan);
+            //UserInterface.CoinSelection(selectedCan, customer.GatherCoinsFromWallet(selectedCan));
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
         {
-            //stage soda to be removed from _inventory to be removed after successful payment _inventory.Remove(nameOfSoda);
-            
-            
-
-            RootBeer notActualValue = new RootBeer();
-            return notActualValue;
+            foreach (Can can in _inventory)
+            {
+                if (can.Name == nameOfSoda)
+                {
+                    return can;
+                }
+                else
+                {
+                    Console.WriteLine("Soda is out of stock, please select another.");
+                }
+            }
+            return null;
         }
 
         //This is the main method for calculating the result of the transaction.

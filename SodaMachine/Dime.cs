@@ -14,7 +14,7 @@ namespace SodaMachine
         public Dime()
         {
             value = 0.10;
-            Name = "dime";
+            Name = "Dime";
         }
 
         //Member Methods (Can Do)

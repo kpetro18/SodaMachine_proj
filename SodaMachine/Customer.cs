@@ -39,12 +39,15 @@ namespace SodaMachine
         //Takes in a list of coin objects to add into the customers wallet.
         public void AddCoinsIntoWallet(List<Coin> coinsToAdd)
         {
-            
+            for (int i = 0; i < coinsToAdd.Count; i++)
+            {
+                Wallet.Coins.Add(coinsToAdd[i]);
+            }
         }
         //Takes in a can object to add to the customers backpack.
         public void AddCanToBackpack(Can purchasedCan)
         {
-            
+            Backpack.cans.Add(purchasedCan);
         }
     }
 }

@@ -10,30 +10,13 @@ namespace SodaMachine
     {
         //Member Variables (Has A)
         private List<Coin> _register;
-            private int startAmountOfQuarters;
-            private int startAmountOfDimes;
-            private int startAmountOfNickels;
-            private int startAmountOfPennies;
-
         private List<Can> _inventory;
-            private int startingRootBeerAmount;
-            private int startingColaAmount;
-            private int startingOrangeSodaAmount;
 
         //Constructor (Spawner)
         public SodaMachine()
         {
             _register = new List<Coin>();
             _inventory = new List<Can>();
-
-            startAmountOfQuarters = 20;
-            startAmountOfDimes = 10;
-            startAmountOfNickels = 20;
-            startAmountOfPennies = 50;
-
-            startingRootBeerAmount = 5;
-            startingColaAmount = 3;
-            startingOrangeSodaAmount = 1; //can just be passed in as perameters 
 
             FillRegister();
             FillInventory();
@@ -44,42 +27,42 @@ namespace SodaMachine
         //A method to fill the sodamachines register with coin objects.
         public void FillRegister()
         {
-            AddQuartersToRegister();
-            AddDimesToRegister();
-            AddNickelsToRegister();
-            AddPenniesToRegister();
+            AddQuartersToRegister(20);
+            AddDimesToRegister(10);
+            AddNickelsToRegister(20);
+            AddPenniesToRegister(50);
         }
 
-        private void AddQuartersToRegister()
+        private void AddQuartersToRegister(int startingQuaters)
         {
-            for (int i = 0; i < startAmountOfQuarters; i++)
+            for (int i = 0; i < startingQuaters; i++)
             {
                 Quarter quarter = new Quarter();
                 _register.Add(quarter);
             }
         }
 
-        private void AddDimesToRegister()
+        private void AddDimesToRegister(int startingDimes)
         {
-            for (int i = 0; i < startAmountOfDimes; i++)
+            for (int i = 0; i < startingDimes; i++)
             {
                 Dime dime = new Dime();
                 _register.Add(dime);
             }
         }
 
-        private void AddNickelsToRegister()
+        private void AddNickelsToRegister(int startingNickels)
         {
-            for (int i = 0; i < startAmountOfNickels; i++)
+            for (int i = 0; i < startingNickels; i++)
             {
                 Nickel nickel = new Nickel();
                 _register.Add(nickel);
             }
         }
 
-        private void AddPenniesToRegister()
+        private void AddPenniesToRegister(int startingPennies)
         {
-            for (int i = 0; i < startAmountOfPennies; i++)
+            for (int i = 0; i < startingPennies; i++)
             {
                 Penny penny = new Penny();
                 _register.Add(penny);
@@ -89,32 +72,32 @@ namespace SodaMachine
         //A method to fill the sodamachines inventory with soda can objects.
         public void FillInventory()
         {
-            FillRootBeer();
-            FillCola();
-            FillOrangeSoda();
+            FillRootBeer(5);
+            FillCola(3);
+            FillOrangeSoda(1);
         }
 
-        private void FillRootBeer()
+        private void FillRootBeer(int startingRootBeer)
         {
-            for (int i = 0; i < startingRootBeerAmount; i++)
+            for (int i = 0; i < startingRootBeer; i++)
             {
                 RootBeer rootBeer = new RootBeer();
                 _inventory.Add(rootBeer);
             }
         }
 
-        private void FillCola()
+        private void FillCola(int startCola)
         {
-            for (int i = 0; i < startingColaAmount; i++)
+            for (int i = 0; i < startCola; i++)
             {
                 Cola cola = new Cola();
                 _inventory.Add(cola);
             }
         }
 
-        private void FillOrangeSoda()
+        private void FillOrangeSoda(int startingOrangeSoda)
         {
-            for (int i = 0; i < startingOrangeSodaAmount; i++)
+            for (int i = 0; i < startingOrangeSoda; i++)
             {
                 OrangeSoda orangeSoda= new OrangeSoda();
                 _inventory.Add(orangeSoda);
@@ -138,11 +121,21 @@ namespace SodaMachine
         //pass payment to the calculate transaction method to finish up the transaction based on the results.
         private void Transaction(Customer customer)
         {
-           
+            //display list of sodas available
+            string selectedSoda = UserInterface.SodaSelection(_inventory);
+            GetSodaFromInventory(selectedSoda);
+            //move to payment method 
+            
+
+            //magical stuff to calculate the actual purchase. add/remove coins/cans to/from soda machine register and customer/backback
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
         {
+            //stage soda to be removed from _inventory to be removed after successful payment _inventory.Remove(nameOfSoda);
+            
+            
+
             RootBeer notActualValue = new RootBeer();
             return notActualValue;
         }
@@ -196,7 +189,10 @@ namespace SodaMachine
         //Puts a list of coins into the soda machines register.
         private void DepositCoinsIntoRegister(List<Coin> coins)
         {
-           
+            for (int i = 0; i < coins.Count; i++)
+            {
+                _register.Add(coins[i]);
+            }
         }
     }
 }

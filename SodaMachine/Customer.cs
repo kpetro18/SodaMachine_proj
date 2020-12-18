@@ -20,12 +20,18 @@ namespace SodaMachine
         }
         //Member Methods (Can Do)
 
-        //This method will be the main logic for a customer to retrieve coins form their wallet.
+        //This method will be the main logic for a customer to retrieve coins from their wallet.
         //Takes in the selected can for price reference
         //Will need to get user input for coins they would like to add.
-        //When all is said and done this method will return a list of coin objects that the customer will use a payment for their soda.
+        //When all is said and done this method will return a list of coin objects that the customer will use as payment for their soda.
         public List<Coin> GatherCoinsFromWallet(Can selectedCan)
         {
+            //promt customer to select coins to use for payment
+            double selectedCoinsValue = 0;
+            while (selectedCan.Price > selectedCoinsValue)
+            {
+
+            }
             List<Coin> notActualValue = new List<Coin>();
             return notActualValue;
         }
@@ -33,8 +39,15 @@ namespace SodaMachine
         //Returns null if no coin can be found
         public Coin GetCoinFromWallet(string coinName)
         {
-            Coin notActualValue = new Coin();
-            return notActualValue;
+            for (int i = 0; i < Wallet.Coins.Count; i++)
+            {
+                if (coinName == Wallet.Coins[i].Name)
+                {
+                    Wallet.Coins.Remove(Wallet.Coins[i]);
+                    return Wallet.Coins[i];
+                }
+            }
+            return null;
         }
         //Takes in a list of coin objects to add into the customers wallet.
         public void AddCoinsIntoWallet(List<Coin> coinsToAdd)

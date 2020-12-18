@@ -125,7 +125,7 @@ namespace SodaMachine
             string selectedSoda = UserInterface.SodaSelection(_inventory);
             GetSodaFromInventory(selectedSoda);
             //move to payment method 
-            
+            UserInterface.CoinSelection(selectedSoda, );
 
             //magical stuff to calculate the actual purchase. add/remove coins/cans to/from soda machine register and customer/backback
         }
@@ -157,8 +157,35 @@ namespace SodaMachine
         //If the change cannot be made, return null.
         private List<Coin> GatherChange(double changeValue)
         {
-            List<Coin> notActualValue = new List<Coin>();
-            return notActualValue;
+            List<Coin> changeCoins = null;
+            while (changeValue > 0)
+            {
+                if (changeValue > 0.25)
+                {
+                    Coin quarter = GetCoinFromRegister("Quarter");
+                    changeCoins.Add(quarter);
+                    changeValue -= .25;
+                }
+                else if (changeValue >= .10)
+                {
+                    Coin dime = GetCoinFromRegister("Dime");
+                    changeCoins.Add(dime);
+                    changeValue -= .10;
+                }
+                else if (changeValue >= .05)
+                {
+                    Coin nickel = GetCoinFromRegister("Nickel");
+                    changeCoins.Add(nickel);
+                    changeValue -= .05;
+                }
+                else if (changeValue >= 0)
+                {
+                    Coin penny = GetCoinFromRegister("Penny");
+                    changeCoins.Add(penny);
+                    changeValue -= .01;
+                }
+            }
+            return changeCoins;
         }
         //Reusable method to check if the register has a coin of that name.
         //If it does have one, return true.  Else, false.
